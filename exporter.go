@@ -444,6 +444,7 @@ func (b *Exporter) removeStaleMetrics() {
 				continue
 			}
 			if lvs.lastRegisteredAt.Add(time.Duration(lvs.ttl) * time.Second).Before(now) {
+				log.Debugf("Delete metric %s", metricName)
 				b.Counters.Delete(metricName, lvs.labels)
 				b.Gauges.Delete(metricName, lvs.labels)
 				b.Summaries.Delete(metricName, lvs.labels)
